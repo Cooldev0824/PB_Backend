@@ -11,25 +11,15 @@ const Proposal = require('../models/Proposal')
 const app = express();
 const PORT = process.env.PORT;
 const Mongo_URI = process.env.MONGO_URI;
-const Frontend_URI = process.env.FRONTEND_URI;
+const FRONTEND_URI = process.env.FRONTEND_URI;
 
 // Middleware
 // app.use(cors());
 app.use(bodyParser.json());
 
-const allowedOrigins = [Frontend_URI];
+const allowedOrigins = [FRONTEND_URI ];
 
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE','OPTIONS'],
-  credentials: true, // Allow cookies/auth headers
-}));
+app.use(cors());
 
 // MongoDB Connection
 mongoose.connect(`${Mongo_URI}`, {
