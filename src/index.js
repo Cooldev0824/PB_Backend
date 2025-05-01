@@ -12,14 +12,14 @@ const app = express();
 const PORT = process.env.PORT;
 const Mongo_URI = process.env.MONGO_URI;
 const FRONTEND_URI = process.env.FRONTEND_URI;
-
+app.use(cors());
 // Middleware
 // app.use(cors());
 app.use(bodyParser.json());
 
 const allowedOrigins = [FRONTEND_URI ];
 
-app.use(cors());
+
 
 // MongoDB Connection
 mongoose.connect(`${Mongo_URI}`, {
