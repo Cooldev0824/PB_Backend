@@ -13,7 +13,7 @@ const PORT = process.env.PORT;
 const Mongo_URI = process.env.MONGO_URI;
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
 
 // MongoDB Connection
