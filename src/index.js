@@ -20,19 +20,9 @@ app.use(bodyParser.json());
 const allowedOrigins = [Frontend_URI];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or Postman)
-    if (!origin) return callback(null, true);
-
-if (allowedOrigins.indexOf(origin) !== -1) {
-  // Origin is allowed
-  callback(null, true);
-} else {
-  // Origin is not allowed
-  callback(new Error('Not allowed by CORS'));
-}
-  },
-  credentials: true, // Allow cookies and credentials
+  origin: 'https://pb-frontend-gules.vercel.app', // Replace with your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true, // If you need cookies/auth headers
 }));
 
 // MongoDB Connection
