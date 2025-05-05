@@ -5,8 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Proposal = require('../models/Proposal')
-
+const Proposal = require('../models/Proposal');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -17,19 +16,30 @@ app.use(cors());
 // app.use(cors());
 app.use(bodyParser.json());
 
-const allowedOrigins = [FRONTEND_URI ];
-
-
+const allowedOrigins = [FRONTEND_URI];
 
 // MongoDB Connection
-mongoose.connect(`${Mongo_URI}`, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 30000
-}).then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
+mongoose
+  .connect(`${Mongo_URI}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 30000,
+  })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
 // Routes
+app.get('/api/', async (req, res) => {
+  try {
+    const proposals = await Proposal.find();
+    console.log(proposals);
+    res.status(201).json(proposals);
+  } catch (error) {
+    console.error('Error creating proposal:', error);
+    res.status(500).json({ error: 'Failed to fetch proposal' });
+  }
+});
+
 app.get('/api/proposals', async (req, res) => {
   try {
     const proposals = await Proposal.find();
@@ -75,7 +85,7 @@ app.put('/api/proposals/:id', async (req, res) => {
         content: content,
         background: background,
         pageSize: pageSize,
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
       },
       { new: true }
     );
