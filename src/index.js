@@ -29,7 +29,7 @@ mongoose
   .catch((err) => console.error('MongoDB connection error:', err));
 
 // Routes
-app.get('/api/', async (req, res) => {
+app.get('/', async (req, res) => {
   try {
     const proposals = await Proposal.find();
     console.log(proposals);
